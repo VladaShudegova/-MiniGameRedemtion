@@ -18,15 +18,15 @@ public class PlayerMiniGame : MonoBehaviour
 
         //anim.SetTrigger("isRunMiniGame");
       
-        float deltaX = speed * Input.GetAxis("Horizontal");
+       // float deltaX = speed * Input.GetAxis("Horizontal");
         
         //rb2d.AddForce(new Vector2(deltaX, 0) * speed);
-        rb2d.velocity = new Vector2(deltaX, rb2d.velocity.y);
+        //rb2d.velocity = new Vector2(deltaX, rb2d.velocity.y);
 
         //rb2d.velocity = new Vector2(speed * input, rb2d.velocity.y);
 
-        // float deltaX = speed * Input.GetAxis("Horizontal") * Time.deltaTime;
-        //gameObject.transform.Translate(deltaX, 0, 0);
+        float deltaX = speed * Input.GetAxis("Horizontal") * Time.deltaTime;
+        gameObject.transform.Translate(deltaX, 0, 0);
         
     }
     
