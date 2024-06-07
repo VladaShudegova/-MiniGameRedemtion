@@ -9,7 +9,10 @@ public class PlayerMiniGame : MonoBehaviour
     Rigidbody2D rb2d; 
     SpriteRenderer spriteRenderer;
     
-    [SerializeField]   Animator anim; 
+    Animator anim; 
+
+    private bool wasRunning;
+    private bool grounded = true;
 
 
     void Awake(){
@@ -19,20 +22,39 @@ public class PlayerMiniGame : MonoBehaviour
         
     }
     void Update(){
-
-        //anim.SetTrigger("isRunMiniGame");
       
-        float deltaX = speed * Input.GetAxis("Horizontal") * Time.deltaTime;
-        Flip();
-        gameObject.transform.Translate(deltaX, 0, 0);
+       if( Input.GetAxis("Horizontal") != 0){
+           Run();
+        }
+        else if(wasRunning){
+            wasRunning = false;
+            anim.SetBool("isRun", false);
+        }
         
     }
 
+    void Run(){
+
+       wasRunning = true;
+
+        float deltaX = speed * Input.GetAxis("Horizontal") * Time.deltaTime;
+        anim.SetBool("isRun", grounded);    //вкл аним, если на земле
+        gameObject.transform.Translate(deltaX, 0, 0);
+
+        Flip();
+    }
+    
     void Flip(){
         if(Input.GetAxis("Horizontal") < 0) 
-            spriteRenderer.flipX = true; 
-        else if (Input.GetAxis("Horizontal") > 0)
+        {
             spriteRenderer.flipX = false; 
+            anim.SetTrigger("isRunMiniGame");
+        }
+        else if (Input.GetAxis("Horizontal") > 0)
+        {
+            spriteRenderer.flipX = true; 
+             anim.SetTrigger("isRunMiniGame");
+        }
     }
 
 }
